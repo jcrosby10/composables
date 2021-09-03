@@ -1,0 +1,174 @@
+package com.huntergaming.composables
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.res.dimensionResource
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingButtonPreview() {
+    HunterGamingButton(onClick = {  }, text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingBodyTextPreview() {
+    HunterGamingBodyText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingHeaderTextPreview() {
+    HunterGamingHeaderText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingTitleTextPreview() {
+    HunterGamingTitleText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingAlertDialogPreview() {
+    HunterGamingAlertDialog(
+        confirmButton = {
+            HunterGamingButton(
+                onClick = {},
+                text = R.string.test
+            )
+        },
+        dismissButton = {
+            HunterGamingButton(
+                onClick = {},
+                text = R.string.test
+            )
+        },
+        title = { HunterGamingTitleText(text = R.string.test) },
+        text = { HunterGamingBodyText(text = R.string.test) }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingCircularProgressIndicatorPreview() {
+    HunterGamingCircularProgressIndicator()
+}
+
+@Composable
+internal fun HunterGamingButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true,
+    text: Int
+) {
+    Button(
+        enabled = isEnabled,
+        onClick = onClick,
+
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary,
+            disabledBackgroundColor = MaterialTheme.colors.error,
+            disabledContentColor = MaterialTheme.colors.onError
+        ),
+
+        modifier = modifier
+    ){
+        Text(
+            text = stringResource(id = text),
+            style = MaterialTheme.typography.button
+        )
+    }
+}
+
+@Composable
+internal fun HunterGamingBodyText(
+    text: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(id = text),
+        style = MaterialTheme.typography.body1,
+
+        modifier = modifier.padding(
+            start = dimensionResource(R.dimen.edge_padding_5dp),
+            end = dimensionResource(R.dimen.edge_padding_5dp)
+        ),
+
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+internal fun HunterGamingHeaderText(
+    text: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(id = text),
+        style = MaterialTheme.typography.h1,
+
+        modifier = modifier.padding(
+            start = dimensionResource(R.dimen.edge_padding_5dp),
+            end = dimensionResource(R.dimen.edge_padding_5dp)
+        ),
+
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+internal fun HunterGamingTitleText(
+    text: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(id = text),
+        style = MaterialTheme.typography.h4,
+
+        modifier = modifier.padding(
+            start = dimensionResource(R.dimen.edge_padding_5dp),
+            end = dimensionResource(R.dimen.edge_padding_5dp)
+        ),
+
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+internal fun HunterGamingAlertDialog(
+    modifier: Modifier = Modifier,
+    confirmButton: @Composable () -> Unit,
+    dismissButton: @Composable (() -> Unit)? = null,
+    title: @Composable (() -> Unit),
+    text: @Composable (() -> Unit)
+) {
+    AlertDialog(
+        onDismissRequest = {  },
+        confirmButton = confirmButton,
+        dismissButton = dismissButton,
+        title = title,
+        text = text,
+        backgroundColor = MaterialTheme.colors.primaryVariant,
+        modifier = modifier
+    )
+}
+
+@Composable
+internal fun HunterGamingCircularProgressIndicator(modifier: Modifier = Modifier) {
+    CircularProgressIndicator(
+        color = MaterialTheme.colors.secondary,
+        modifier = modifier
+    )
+}
