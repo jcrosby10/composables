@@ -66,7 +66,7 @@ private fun HunterGamingCircularProgressIndicatorPreview() {
 }
 
 @Composable
-internal fun HunterGamingButton(
+fun HunterGamingButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
@@ -93,7 +93,7 @@ internal fun HunterGamingButton(
 }
 
 @Composable
-internal fun HunterGamingBodyText(
+fun HunterGamingBodyText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
@@ -111,7 +111,7 @@ internal fun HunterGamingBodyText(
 }
 
 @Composable
-internal fun HunterGamingHeaderText(
+fun HunterGamingHeaderText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
@@ -129,7 +129,7 @@ internal fun HunterGamingHeaderText(
 }
 
 @Composable
-internal fun HunterGamingTitleText(
+fun HunterGamingTitleText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
@@ -147,7 +147,7 @@ internal fun HunterGamingTitleText(
 }
 
 @Composable
-internal fun HunterGamingAlertDialog(
+fun HunterGamingAlertDialog(
     modifier: Modifier = Modifier,
     confirmButton: @Composable () -> Unit,
     dismissButton: @Composable (() -> Unit)? = null,
@@ -166,7 +166,7 @@ internal fun HunterGamingAlertDialog(
 }
 
 @Composable
-internal fun HunterGamingCircularProgressIndicator(modifier: Modifier = Modifier) {
+fun HunterGamingCircularProgressIndicator(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
         color = MaterialTheme.colors.secondary,
         modifier = modifier

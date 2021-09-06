@@ -35,7 +35,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.1" //compose version
+        kotlinCompilerExtensionVersion = "1.0.2" //compose version
     }
 }
 
@@ -44,14 +44,14 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.google.android.material:material:1.4.0")
 
-    implementation("androidx.compose.ui:ui:1.0.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.0.1")
-    implementation("androidx.compose.ui:ui-tooling:1.0.1")
-    implementation("androidx.compose.material:material:1.0.1")
-    implementation("androidx.compose.animation:animation:1.0.1")
-    implementation("androidx.compose.compiler:compiler:1.0.1")
-    implementation("androidx.compose.foundation:foundation:1.0.1")
-    implementation("androidx.compose.runtime:runtime:1.0.1")
+    implementation("androidx.compose.ui:ui:1.0.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.0.2")
+    implementation("androidx.compose.ui:ui-tooling:1.0.2")
+    implementation("androidx.compose.material:material:1.0.2")
+    implementation("androidx.compose.animation:animation:1.0.2")
+    implementation("androidx.compose.compiler:compiler:1.0.2")
+    implementation("androidx.compose.foundation:foundation:1.0.2")
+    implementation("androidx.compose.runtime:runtime:1.0.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
