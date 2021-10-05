@@ -1,5 +1,10 @@
 package com.huntergaming.composables
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
@@ -12,6 +17,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 
 @Preview(showBackground = true)
@@ -65,6 +71,26 @@ private fun HunterGamingCircularProgressIndicatorPreview() {
     HunterGamingCircularProgressIndicator()
 }
 
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingColumnPreview() {
+    HunterGamingColumn {
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingRowPreview() {
+    HunterGamingRow {
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+    }
+}
+
 @Composable
 fun HunterGamingButton(
     modifier: Modifier = Modifier,
@@ -97,13 +123,24 @@ fun HunterGamingBodyText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
+    HunterGamingBodyText(
+        text = stringResource(text),
+        modifier = modifier
+    )
+}
+
+@Composable
+fun HunterGamingBodyText(
+    text: String,
+    modifier: Modifier = Modifier
+) {
     Text(
-        text = stringResource(id = text),
+        text = text,
         style = MaterialTheme.typography.body1,
 
         modifier = modifier.padding(
-            start = dimensionResource(R.dimen.edge_padding_5dp),
-            end = dimensionResource(R.dimen.edge_padding_5dp)
+            start = dimensionResource(R.dimen.padding_small),
+            end = dimensionResource(R.dimen.padding_small)
         ),
 
         textAlign = TextAlign.Center
@@ -120,8 +157,8 @@ fun HunterGamingHeaderText(
         style = MaterialTheme.typography.h1,
 
         modifier = modifier.padding(
-            start = dimensionResource(R.dimen.edge_padding_5dp),
-            end = dimensionResource(R.dimen.edge_padding_5dp)
+            start = dimensionResource(R.dimen.padding_small),
+            end = dimensionResource(R.dimen.padding_small)
         ),
 
         textAlign = TextAlign.Center
@@ -138,8 +175,8 @@ fun HunterGamingTitleText(
         style = MaterialTheme.typography.h4,
 
         modifier = modifier.padding(
-            start = dimensionResource(R.dimen.edge_padding_5dp),
-            end = dimensionResource(R.dimen.edge_padding_5dp)
+            start = dimensionResource(R.dimen.padding_small),
+            end = dimensionResource(R.dimen.padding_small)
         ),
 
         textAlign = TextAlign.Center
@@ -170,5 +207,32 @@ fun HunterGamingCircularProgressIndicator(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
         color = MaterialTheme.colors.secondary,
         modifier = modifier
+    )
+}
+
+@Composable
+fun HunterGamingColumn(
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Center,
+        content = content
+    )
+}
+
+@Composable
+fun HunterGamingRow(
+    modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    content: @Composable RowScope.() -> Unit
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = horizontalArrangement,
+        content = content
     )
 }

@@ -52,6 +52,7 @@ dependencies {
     implementation("androidx.compose.compiler:compiler:1.0.2")
     implementation("androidx.compose.foundation:foundation:1.0.2")
     implementation("androidx.compose.runtime:runtime:1.0.2")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
