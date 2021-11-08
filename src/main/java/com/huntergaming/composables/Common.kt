@@ -3,14 +3,12 @@ package com.huntergaming.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Slider
@@ -78,6 +76,8 @@ private fun HunterGamingHorizontalSliderPreview() {
 private fun HunterGamingHorizontalImageRadioButtonPreview() {
     HunterGamingHorizontalImageRadioButton(
         images = listOf(R.drawable.card_back_red),
+        imageWidth = R.dimen.image_radio_width,
+        imageHeight = R.dimen.image_radio_height,
         contentDescriptions = listOf("test content description"),
         selectedIndex = 0,
         onSelect = {}
@@ -210,6 +210,8 @@ fun HunterGamingHorizontalRadioButton(
 fun HunterGamingHorizontalImageRadioButton(
     modifier: Modifier = Modifier,
     images: List<Int>,
+    imageWidth: Int,
+    imageHeight: Int,
     contentDescriptions: List<String>,
     selectedIndex: Int,
     onSelect: (() -> Unit)
@@ -219,31 +221,37 @@ fun HunterGamingHorizontalImageRadioButton(
     Row(
         modifier = modifier
     ) {
-        images.forEachIndexed { index, value ->
+        images.forEachIndexed { index, imageId ->
             Row(
                 modifier= Modifier
                     .padding(
                         start = dimensionResource(R.dimen.padding_large)
                     )
                     .selectable(
-                        selected = (value == selectedOption),
+                        selected = (imageId == selectedOption),
                         onClick = {
-                            onOptionSelected(value)
+                            onOptionSelected(imageId)
                         }
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (value == selectedOption),
+                    selected = (imageId == selectedOption),
                     onClick = {
-                        onOptionSelected(value)
+                        onOptionSelected(imageId)
                         onSelect()
                     }
                 )
 
                 Image(
-                    painter = painterResource(value),
-                    modifier = Modifier.fillMaxHeight(.4f),
+                    painter = painterResource(imageId),
+                    modifier = Modifier
+                        .requiredWidth(
+                            width = dimensionResource(imageWidth)
+                        )
+                        .requiredHeight(
+                            height = dimensionResource(imageHeight)
+                        ),
                     contentDescription = contentDescriptions[index]
                 )
             }
@@ -318,7 +326,7 @@ fun HunterGamingTabs(
                         )
                     },
                     icon = {
-                        Icon(
+                        Image(
                             modifier = Modifier
                                 .requiredWidth(
                                     width = dimensionResource(

@@ -6,4 +6,7 @@
 
     <dimen name="tab_icon_width">30dp</dimen>
     <dimen name="tab_icon_height">30dp</dimen>
+
+    <dimen name="image_radio_width">110dp</dimen>
+    <dimen name="image_radio_height">152dp</dimen>
 </resources>
