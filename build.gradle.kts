@@ -35,24 +35,26 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.2" //compose version
+        kotlinCompilerExtensionVersion = "1.0.5" //compose version
     }
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.google.android.material:material:1.4.0")
 
-    implementation("androidx.compose.ui:ui:1.0.2")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.0.2")
-    implementation("androidx.compose.ui:ui-tooling:1.0.2")
-    implementation("androidx.compose.material:material:1.0.2")
-    implementation("androidx.compose.animation:animation:1.0.2")
-    implementation("androidx.compose.compiler:compiler:1.0.2")
-    implementation("androidx.compose.foundation:foundation:1.0.2")
-    implementation("androidx.compose.runtime:runtime:1.0.2")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
+    implementation("androidx.compose.ui:ui:1.0.5")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.0.5")
+    implementation("androidx.compose.ui:ui-tooling:1.0.5")
+    implementation("androidx.compose.material:material:1.0.5")
+    implementation("androidx.compose.animation:animation:1.0.5")
+    implementation("androidx.compose.compiler:compiler:1.0.5")
+    implementation("androidx.compose.foundation:foundation:1.0.5")
+    implementation("androidx.compose.runtime:runtime:1.0.5")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
+
+    implementation("com.google.accompanist:accompanist-pager:0.12.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

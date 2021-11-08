@@ -19,6 +19,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 
 @Preview(showBackground = true)
 @Composable
@@ -91,6 +93,12 @@ private fun HunterGamingRowPreview() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingSmallBodyTextPreview() {
+    HunterGamingSmallCaptionText(text = R.string.test)
+}
+
 @Composable
 fun HunterGamingButton(
     modifier: Modifier = Modifier,
@@ -126,6 +134,24 @@ fun HunterGamingBodyText(
     HunterGamingBodyText(
         text = stringResource(text),
         modifier = modifier
+    )
+}
+
+@Composable
+fun HunterGamingSmallCaptionText(
+    text: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = stringResource(id = text),
+        style = MaterialTheme.typography.caption,
+
+        modifier = modifier.padding(
+            start = dimensionResource(R.dimen.padding_small),
+            end = dimensionResource(R.dimen.padding_small)
+        ),
+
+        textAlign = TextAlign.Center
     )
 }
 
@@ -186,18 +212,26 @@ fun HunterGamingTitleText(
 @Composable
 fun HunterGamingAlertDialog(
     modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit = {  },
     confirmButton: @Composable () -> Unit,
     dismissButton: @Composable (() -> Unit)? = null,
     title: @Composable (() -> Unit),
-    text: @Composable (() -> Unit)
+    text: @Composable (() -> Unit),
+    dismissOnBackPress: Boolean = true,
+    dismissOnClickOutside: Boolean = true
 ) {
     AlertDialog(
-        onDismissRequest = {  },
+        onDismissRequest = onDismissRequest,
         confirmButton = confirmButton,
         dismissButton = dismissButton,
         title = title,
         text = text,
         backgroundColor = MaterialTheme.colors.primaryVariant,
+        properties = DialogProperties(
+            dismissOnBackPress = dismissOnBackPress,
+            dismissOnClickOutside = dismissOnClickOutside,
+            securePolicy = SecureFlagPolicy.Inherit,
+        ),
         modifier = modifier
     )
 }
