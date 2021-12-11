@@ -8,7 +8,7 @@ android {
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 31
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
 
     implementation("androidx.compose.ui:ui:1.0.5")
@@ -52,7 +52,7 @@ dependencies {
     implementation("androidx.compose.compiler:compiler:1.0.5")
     implementation("androidx.compose.foundation:foundation:1.0.5")
     implementation("androidx.compose.runtime:runtime:1.0.5")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
 
     implementation("com.google.accompanist:accompanist-pager:0.12.0")
 
