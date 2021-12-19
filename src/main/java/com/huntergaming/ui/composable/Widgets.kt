@@ -1,4 +1,4 @@
-package com.huntergaming.composables
+package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
+import com.huntergaming.ui.R
 
 @Preview(showBackground = true)
 @Composable

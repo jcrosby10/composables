@@ -1,4 +1,4 @@
-package com.huntergaming.composables
+package com.huntergaming.ui
 
 import org.junit.Test
 

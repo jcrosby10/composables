@@ -1,4 +1,4 @@
-package com.huntergaming.composables
+package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -38,6 +38,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.huntergaming.ui.R
 import kotlinx.coroutines.launch
 
 @Preview(showBackground = true)
