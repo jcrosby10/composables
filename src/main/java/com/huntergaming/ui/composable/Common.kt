@@ -4,11 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Slider
@@ -16,7 +16,6 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -41,94 +41,16 @@ import com.google.accompanist.pager.rememberPagerState
 import com.huntergaming.ui.R
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingFieldRowPreview() {
-    val text = remember { mutableStateOf(TextFieldValue(text =  "test")) }
-    HunterGamingFieldRow(
-        fieldNameString = R.string.test,
-        hintString = R.string.test,
-        onValueChanged = {},
-        textState = text
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingHorizontalRadioButtonPreview() {
-    HunterGamingHorizontalRadioButton(
-        texts = listOf("A", "B"),
-        selectedIndex = 0,
-        onSelect = {}
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingHorizontalSliderPreview() {
-    HunterGamingHorizontalSlider(
-        initialValue = .8f,
-        onValueChange = {  },
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingHorizontalImageRadioButtonPreview() {
-    HunterGamingHorizontalImageRadioButton(
-        images = listOf(R.drawable.card_back_red),
-        imageWidth = R.dimen.image_radio_width,
-        imageHeight = R.dimen.image_radio_height,
-        contentDescriptions = listOf("test content description"),
-        selectedIndex = 0,
-        onSelect = {}
-    )
-}
-
-@ExperimentalPagerApi
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingTabsPreview() {
-    val tabIcons = remember {
-        mutableStateOf(
-            listOf(
-                R.drawable.card_back_red
-            )
-        )
-    }
-
-    val tabTitles = remember {
-        mutableStateOf(
-            listOf(
-                R.string.test
-            )
-        )
-    }
-
-    HunterGamingTabs(
-        tabIcons = tabIcons.value,
-        tabTitles = tabTitles.value,
-        pagerState = rememberPagerState(
-            pageCount = tabIcons.value.size,
-            initialOffscreenLimit = 2,
-            infiniteLoop = true,
-            initialPage = 0,
-        ),
-        {}
-    )
-}
-
 @Composable
 fun HunterGamingFieldRow(
     fieldNameString: Int,
     hintString: Int,
-    hideText: Boolean = false,
+    isPassword: MutableState<Boolean> = mutableStateOf(false),
     isError: Boolean = false,
     onValueChanged: (TextFieldValue) -> Unit,
     textState: MutableState<TextFieldValue>
 ) {
     Row(modifier = Modifier
-        .fillMaxWidth()
         .padding(dimensionResource(id = R.dimen.padding_small))) {
 
         Text(
@@ -142,15 +64,13 @@ fun HunterGamingFieldRow(
 
         TextField(
             value = textState.value,
-            onValueChange = onValueChanged,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colors.onPrimary,
-                backgroundColor = MaterialTheme.colors.background,
-                errorIndicatorColor = MaterialTheme.colors.error
-            ),
+
+            onValueChange = {
+                textState.value = it
+                onValueChanged(it)
+            },
 
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(start = dimensionResource(id = R.dimen.padding_small)),
 
             placeholder = {
@@ -160,7 +80,8 @@ fun HunterGamingFieldRow(
                 )
             },
 
-            visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (isPassword.value) PasswordVisualTransformation() else VisualTransformation.None,
             isError = isError
         )
     }
@@ -356,4 +277,83 @@ fun HunterGamingTabs(
             tabScreens[index]()
         }
     }
+}
+
+// PREVIEWS
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingFieldRowPreview() {
+    val text = remember { mutableStateOf(TextFieldValue(text =  "test")) }
+    HunterGamingFieldRow(
+        fieldNameString = R.string.test,
+        hintString = R.string.test,
+        onValueChanged = {},
+        textState = text
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingHorizontalRadioButtonPreview() {
+    HunterGamingHorizontalRadioButton(
+        texts = listOf("A", "B"),
+        selectedIndex = 0,
+        onSelect = {}
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingHorizontalSliderPreview() {
+    HunterGamingHorizontalSlider(
+        initialValue = .8f,
+        onValueChange = {  },
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingHorizontalImageRadioButtonPreview() {
+    HunterGamingHorizontalImageRadioButton(
+        images = listOf(R.drawable.card_back_red),
+        imageWidth = R.dimen.image_radio_width,
+        imageHeight = R.dimen.image_radio_height,
+        contentDescriptions = listOf("test content description"),
+        selectedIndex = 0,
+        onSelect = {}
+    )
+}
+
+@ExperimentalPagerApi
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingTabsPreview() {
+    val tabIcons = remember {
+        mutableStateOf(
+            listOf(
+                R.drawable.card_back_red
+            )
+        )
+    }
+
+    val tabTitles = remember {
+        mutableStateOf(
+            listOf(
+                R.string.test
+            )
+        )
+    }
+
+    HunterGamingTabs(
+        tabIcons = tabIcons.value,
+        tabTitles = tabTitles.value,
+        pagerState = rememberPagerState(
+            pageCount = tabIcons.value.size,
+            initialOffscreenLimit = 2,
+            infiniteLoop = true,
+            initialPage = 0,
+        ),
+        {}
+    )
 }

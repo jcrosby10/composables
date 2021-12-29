@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="test">TEST</string>
+    <string name="button_yes">YES</string>
+    <string name="button_no">NO</string>
+
+    <string name="content_description_not_needed">@null</string>
 </resources>

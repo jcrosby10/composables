@@ -1,10 +1,12 @@
 package com.huntergaming.ui.composable
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
@@ -14,91 +16,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.SecureFlagPolicy
 import com.huntergaming.ui.R
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingButtonPreview() {
-    HunterGamingButton(onClick = {  }, text = R.string.test)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingBodyTextPreview() {
-    HunterGamingBodyText(text = R.string.test)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingHeaderTextPreview() {
-    HunterGamingHeaderText(text = R.string.test)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingTitleTextPreview() {
-    HunterGamingTitleText(text = R.string.test)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingAlertDialogPreview() {
-    HunterGamingAlertDialog(
-        confirmButton = {
-            HunterGamingButton(
-                onClick = {},
-                text = R.string.test
-            )
-        },
-        dismissButton = {
-            HunterGamingButton(
-                onClick = {},
-                text = R.string.test
-            )
-        },
-        title = { HunterGamingTitleText(text = R.string.test) },
-        text = { HunterGamingBodyText(text = R.string.test) }
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingCircularProgressIndicatorPreview() {
-    HunterGamingCircularProgressIndicator()
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingColumnPreview() {
-    HunterGamingColumn {
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingRowPreview() {
-    HunterGamingRow {
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingSmallBodyTextPreview() {
-    HunterGamingSmallCaptionText(text = R.string.test)
-}
 
 @Composable
 fun HunterGamingButton(
@@ -110,14 +38,6 @@ fun HunterGamingButton(
     Button(
         enabled = isEnabled,
         onClick = onClick,
-
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary,
-            disabledBackgroundColor = MaterialTheme.colors.error,
-            disabledContentColor = MaterialTheme.colors.onError
-        ),
-
         modifier = modifier
     ){
         Text(
@@ -214,36 +134,83 @@ fun HunterGamingTitleText(
 fun HunterGamingAlertDialog(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {  },
-    confirmButton: @Composable () -> Unit,
-    dismissButton: @Composable (() -> Unit)? = null,
-    title: @Composable (() -> Unit),
-    text: @Composable (() -> Unit),
+    onConfirm: () -> Unit,
+    onDismiss: (() -> Unit)? = null,
+    title: Int,
+    text: String,
     dismissOnBackPress: Boolean = true,
-    dismissOnClickOutside: Boolean = true
+    dismissOnClickOutside: Boolean = true,
+    state: MutableState<Boolean>
 ) {
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        confirmButton = confirmButton,
-        dismissButton = dismissButton,
-        title = title,
-        text = text,
-        backgroundColor = MaterialTheme.colors.primaryVariant,
-        properties = DialogProperties(
-            dismissOnBackPress = dismissOnBackPress,
-            dismissOnClickOutside = dismissOnClickOutside,
-            securePolicy = SecureFlagPolicy.Inherit,
-        ),
-        modifier = modifier
-    )
+    if (state.value) {
+        AlertDialog(
+            modifier = modifier,
+            properties = DialogProperties(
+                dismissOnBackPress = dismissOnBackPress,
+                dismissOnClickOutside = dismissOnClickOutside,
+                securePolicy = SecureFlagPolicy.Inherit,
+            ),
+            onDismissRequest = onDismissRequest,
+            confirmButton = {
+                HunterGamingButton(
+                    onClick = {
+                        state.value = false
+                        onConfirm()
+                    },
+                    text = R.string.button_yes
+                )
+            },
+            dismissButton = {
+                if (onDismiss != null) {
+                    HunterGamingButton(
+                        onClick = {
+                            state.value = false
+                            onDismiss()
+                        },
+                        text = R.string.button_no
+                    )
+                }
+            },
+            title = {
+                HunterGamingTitleText(
+                    text = title
+                )
+            },
+            text = {
+                HunterGamingBodyText(
+                    text = text
+                )
+            }
+        )
+    }
 }
 
 @Composable
-fun HunterGamingCircularProgressIndicator(modifier: Modifier = Modifier) {
-    CircularProgressIndicator(
-        color = MaterialTheme.colors.secondary,
-        modifier = modifier
+fun HunterGamingAlertDialog(
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit = {  },
+    onConfirm: () -> Unit,
+    onDismiss: (() -> Unit)? = null,
+    title: Int,
+    text: Int,
+    dismissOnBackPress: Boolean = true,
+    dismissOnClickOutside: Boolean = true,
+    state: MutableState<Boolean>
+) {
+    HunterGamingAlertDialog(
+        modifier = modifier,
+        onConfirm = onConfirm,
+        onDismiss = onDismiss,
+        onDismissRequest = onDismissRequest,
+        dismissOnBackPress = dismissOnBackPress,
+        dismissOnClickOutside = dismissOnClickOutside,
+        title = title,
+        text = stringResource(id = text),
+        state = state
     )
 }
+
+// PREVIEWS
 
 @Composable
 fun HunterGamingColumn(
@@ -270,4 +237,85 @@ fun HunterGamingRow(
         horizontalArrangement = horizontalArrangement,
         content = content
     )
+}
+
+@Composable
+fun HunterGamingBackgroundImage(image: Int) {
+    Image(
+        modifier = Modifier
+            .fillMaxSize(),
+        painter = painterResource(id = image),
+        contentDescription = stringResource(id = R.string.content_description_not_needed),
+        contentScale = ContentScale.FillBounds
+    )
+}
+
+// PREVIEWS
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingButtonPreview() {
+    HunterGamingButton(onClick = {  }, text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingBodyTextPreview() {
+    HunterGamingBodyText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingHeaderTextPreview() {
+    HunterGamingHeaderText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingTitleTextPreview() {
+    HunterGamingTitleText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingAlertDialogPreview() {
+    HunterGamingAlertDialog(
+        onConfirm = {},
+        onDismiss = {},
+        title = R.string.test,
+        text = R.string.test,
+        state = remember { mutableStateOf(false) }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingColumnPreview() {
+    HunterGamingColumn {
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingRowPreview() {
+    HunterGamingRow {
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+        HunterGamingBodyText(text = R.string.test)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingSmallBodyTextPreview() {
+    HunterGamingSmallCaptionText(text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HunterGamingBackgroundImagePreview() {
+    HunterGamingBackgroundImage(image = R.drawable.card_back_red)
 }
