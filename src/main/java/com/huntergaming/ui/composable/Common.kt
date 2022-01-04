@@ -48,6 +48,7 @@ fun HunterGamingFieldRow(
     isPassword: MutableState<Boolean> = mutableStateOf(false),
     isError: Boolean = false,
     onValueChanged: (TextFieldValue) -> Unit,
+    label: (@Composable () -> Unit)? = null,
     textState: MutableState<TextFieldValue>
 ) {
     Row(modifier = Modifier
@@ -64,6 +65,7 @@ fun HunterGamingFieldRow(
 
         TextField(
             value = textState.value,
+            label = label,
 
             onValueChange = {
                 textState.value = it
