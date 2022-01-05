@@ -215,11 +215,12 @@ fun HunterGamingAlertDialog(
 @Composable
 fun HunterGamingColumn(
     modifier: Modifier = Modifier,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = horizontalAlignment,
         verticalArrangement = Arrangement.Center,
         content = content
     )
@@ -229,11 +230,12 @@ fun HunterGamingColumn(
 fun HunterGamingRow(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     content: @Composable RowScope.() -> Unit
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = verticalAlignment,
         horizontalArrangement = horizontalArrangement,
         content = content
     )
