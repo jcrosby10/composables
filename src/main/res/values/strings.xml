@@ -5,4 +5,5 @@
     <string name="button_no">NO</string>
 
     <string name="content_description_not_needed">@null</string>
+    <string name="content_description_show_hide_password">Press to show or hide the visibility of the password entered.</string>
 </resources>

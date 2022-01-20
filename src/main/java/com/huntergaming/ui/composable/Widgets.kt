@@ -1,11 +1,6 @@
 package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
@@ -20,7 +15,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -210,37 +204,6 @@ fun HunterGamingAlertDialog(
     )
 }
 
-// PREVIEWS
-
-@Composable
-fun HunterGamingColumn(
-    modifier: Modifier = Modifier,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = horizontalAlignment,
-        verticalArrangement = Arrangement.Center,
-        content = content
-    )
-}
-
-@Composable
-fun HunterGamingRow(
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    content: @Composable RowScope.() -> Unit
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = verticalAlignment,
-        horizontalArrangement = horizontalArrangement,
-        content = content
-    )
-}
-
 @Composable
 fun HunterGamingBackgroundImage(image: Int) {
     Image(
@@ -292,32 +255,6 @@ private fun HunterGamingAlertDialogPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun HunterGamingColumnPreview() {
-    HunterGamingColumn {
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingRowPreview() {
-    HunterGamingRow {
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-        HunterGamingBodyText(text = R.string.test)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 private fun HunterGamingSmallBodyTextPreview() {
     HunterGamingSmallCaptionText(text = R.string.test)
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun HunterGamingBackgroundImagePreview() {
-    HunterGamingBackgroundImage(image = R.drawable.card_back_red)
 }

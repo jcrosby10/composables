@@ -1,14 +1,21 @@
 package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Slider
@@ -23,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,18 +53,26 @@ import kotlinx.coroutines.launch
 fun HunterGamingFieldRow(
     fieldNameString: Int,
     hintString: Int,
-    isPassword: MutableState<Boolean> = mutableStateOf(false),
-    isError: Boolean = false,
+    isPassword: Boolean = false,
+    isError: MutableState<Boolean> = mutableStateOf(false),
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     onValueChanged: (TextFieldValue) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     label: (@Composable () -> Unit)? = null,
     textState: MutableState<TextFieldValue>
 ) {
+
     Row(modifier = Modifier
-        .padding(dimensionResource(id = R.dimen.padding_small))) {
+        .fillMaxWidth()
+        .padding(dimensionResource(id = R.dimen.padding_small)),
+        horizontalArrangement = horizontalArrangement
+    ) {
+
+        val transformationState = remember { mutableStateOf(isPassword) }
 
         Text(
             text = stringResource(id = fieldNameString),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.body2,
             modifier = Modifier
                 .padding(end = dimensionResource(id = R.dimen.padding_small), top = dimensionResource(id = R.dimen.padding_large))
                 .defaultMinSize(minWidth = 70.dp),
@@ -82,10 +98,26 @@ fun HunterGamingFieldRow(
                 )
             },
 
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = if (isPassword.value) PasswordVisualTransformation() else VisualTransformation.None,
-            isError = isError
+            keyboardOptions = keyboardOptions,
+            visualTransformation = if (transformationState.value) PasswordVisualTransformation() else VisualTransformation.None,
+            isError = isError.value
         )
+
+        if (isPassword) {
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(
+                        id = if (transformationState.value) R.drawable.ic_lock_24 else R.drawable.ic_lock_open_24),
+                    contentDescription = stringResource(id = R.string.content_description_show_hide_password)
+                )
+                Button(
+                    onClick = { transformationState.value = !transformationState.value },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+                ){}
+            }
+        }
     }
 }
 
@@ -96,6 +128,7 @@ fun HunterGamingHorizontalRadioButton(
     selectedIndex: Int,
     onSelect: (() -> Unit)
 ) {
+
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(texts[selectedIndex] ) }
 
     Row(
@@ -140,6 +173,7 @@ fun HunterGamingHorizontalImageRadioButton(
     selectedIndex: Int,
     onSelect: (() -> Unit)
 ) {
+
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(images[selectedIndex] ) }
 
     Row(
@@ -189,6 +223,7 @@ fun HunterGamingHorizontalSlider(
     onValueChange: (Float) -> Unit,
     initialValue: Float
 ) {
+
     val sliderPosition = remember { mutableStateOf(initialValue) }
 
     ConstraintLayout(
@@ -226,9 +261,10 @@ fun HunterGamingTabs(
     pagerState: PagerState,
     vararg tabScreens: @Composable () -> Unit
 ) {
+
     val tabIndex = pagerState.currentPage
 
-    HunterGamingColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
@@ -290,6 +326,7 @@ private fun HunterGamingFieldRowPreview() {
     HunterGamingFieldRow(
         fieldNameString = R.string.test,
         hintString = R.string.test,
+        isPassword = true,
         onValueChanged = {},
         textState = text
     )
