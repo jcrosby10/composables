@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="test">TEST</string>
-    <string name="button_yes">YES</string>
-    <string name="button_no">NO</string>
+    <string name="button_yes">OK</string>
+    <string name="button_cancel" tools:ignore="ButtonCase">CANCEL</string>
 
     <string name="content_description_not_needed">@null</string>
     <string name="content_description_show_hide_password">Press to show or hide the visibility of the password entered.</string>

@@ -5,4 +5,7 @@ import javax.inject.Inject
 
 class CommunicationAdapter @Inject constructor() {
     val error: MutableLiveData<String> = MutableLiveData()
+    val message: MutableLiveData<Message> = MutableLiveData()
 }
+
+data class Message(val data: Any)

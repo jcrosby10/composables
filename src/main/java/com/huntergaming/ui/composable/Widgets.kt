@@ -1,8 +1,11 @@
 package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +18,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -29,6 +34,7 @@ fun HunterGamingButton(
     isEnabled: Boolean = true,
     text: Int
 ) {
+
     Button(
         enabled = isEnabled,
         onClick = onClick,
@@ -46,6 +52,7 @@ fun HunterGamingBodyText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
+
     HunterGamingBodyText(
         text = stringResource(text),
         modifier = modifier
@@ -57,6 +64,7 @@ fun HunterGamingSmallCaptionText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
+
     Text(
         text = stringResource(id = text),
         style = MaterialTheme.typography.caption,
@@ -75,6 +83,7 @@ fun HunterGamingBodyText(
     text: String,
     modifier: Modifier = Modifier
 ) {
+
     Text(
         text = text,
         style = MaterialTheme.typography.body1,
@@ -93,6 +102,7 @@ fun HunterGamingHeaderText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
+
     Text(
         text = stringResource(id = text),
         style = MaterialTheme.typography.h1,
@@ -111,6 +121,7 @@ fun HunterGamingTitleText(
     text: Int,
     modifier: Modifier = Modifier
 ) {
+
     Text(
         text = stringResource(id = text),
         style = MaterialTheme.typography.h4,
@@ -134,48 +145,72 @@ fun HunterGamingAlertDialog(
     text: String,
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
+    backgroundImage: Int,
     state: MutableState<Boolean>
 ) {
+
     if (state.value) {
-        AlertDialog(
-            modifier = modifier,
-            properties = DialogProperties(
-                dismissOnBackPress = dismissOnBackPress,
-                dismissOnClickOutside = dismissOnClickOutside,
-                securePolicy = SecureFlagPolicy.Inherit,
-            ),
-            onDismissRequest = onDismissRequest,
-            confirmButton = {
-                HunterGamingButton(
-                    onClick = {
-                        state.value = false
-                        onConfirm()
-                    },
-                    text = R.string.button_yes
-                )
-            },
-            dismissButton = {
-                if (onDismiss != null) {
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+
+            Image(
+                painter = painterResource(id = backgroundImage),
+                contentDescription = stringResource(id = R.string.content_description_not_needed),
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .width(dimensionResource(id = R.dimen.dialog_image_width))
+                    .height(dimensionResource(id = R.dimen.dialog_image_height))
+            )
+
+            AlertDialog(
+                modifier = modifier,
+
+                properties = DialogProperties(
+                    dismissOnBackPress = dismissOnBackPress,
+                    dismissOnClickOutside = dismissOnClickOutside,
+                    securePolicy = SecureFlagPolicy.Inherit,
+                ),
+
+                onDismissRequest = onDismissRequest,
+
+                confirmButton = {
                     HunterGamingButton(
                         onClick = {
                             state.value = false
-                            onDismiss()
+                            onConfirm()
                         },
-                        text = R.string.button_no
+                        text = R.string.button_yes
                     )
-                }
-            },
-            title = {
-                HunterGamingTitleText(
-                    text = title
-                )
-            },
-            text = {
-                HunterGamingBodyText(
-                    text = text
-                )
-            }
-        )
+                },
+
+                dismissButton = {
+                    if (onDismiss != null) {
+                        HunterGamingButton(
+                            onClick = {
+                                state.value = false
+                                onDismiss()
+                            },
+                            text = R.string.button_cancel
+                        )
+                    }
+                },
+
+                title = {
+                    HunterGamingTitleText(
+                        text = title
+                    )
+                },
+
+                text = {
+                    HunterGamingBodyText(
+                        text = text
+                    )
+                },
+
+                backgroundColor = Color.Transparent
+            )
+        }
     }
 }
 
@@ -189,6 +224,7 @@ fun HunterGamingAlertDialog(
     text: Int,
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = true,
+    backgroundImage: Int,
     state: MutableState<Boolean>
 ) {
     HunterGamingAlertDialog(
@@ -200,6 +236,7 @@ fun HunterGamingAlertDialog(
         dismissOnClickOutside = dismissOnClickOutside,
         title = title,
         text = stringResource(id = text),
+        backgroundImage = backgroundImage,
         state = state
     )
 }
@@ -249,7 +286,8 @@ private fun HunterGamingAlertDialogPreview() {
         onDismiss = {},
         title = R.string.test,
         text = R.string.test,
-        state = remember { mutableStateOf(false) }
+        state = remember { mutableStateOf(true) },
+        backgroundImage = R.drawable.ic_lock_open_24
     )
 }
 
