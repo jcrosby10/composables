@@ -49,6 +49,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.huntergaming.ui.R
 import kotlinx.coroutines.launch
 
+// COMPOSABLES
+
 @Composable
 fun HunterGamingFieldRow(
     fieldNameString: Int,

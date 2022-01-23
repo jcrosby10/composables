@@ -5,5 +5,7 @@
     <string name="button_cancel" tools:ignore="ButtonCase">CANCEL</string>
 
     <string name="content_description_not_needed">@null</string>
+    <string name="content_description_accept">Accept</string>
+    <string name="content_description_cancel">Cancel</string>
     <string name="content_description_show_hide_password">Press to show or hide the visibility of the password entered.</string>
 </resources>
