@@ -13,5 +13,10 @@
     <dimen name="dialog_image_width">350dp</dimen>
     <dimen name="dialog_image_height">250dp</dimen>
 
+    <dimen name="spacer_size">25dp</dimen>
+    <dimen name="spacer_size_large">45dp</dimen>
+
+    <dimen name="width_300">300dp</dimen>
+
     <dimen name="zero">0dp</dimen>
 </resources>

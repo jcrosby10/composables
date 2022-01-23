@@ -1,20 +1,24 @@
 package com.huntergaming.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.RadioButton
@@ -23,6 +27,13 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Security
+import androidx.compose.material.icons.outlined.SportsEsports
+import androidx.compose.material.icons.outlined.VolumeUp
+import androidx.compose.material.icons.twotone.Security
+import androidx.compose.material.icons.twotone.SportsEsports
+import androidx.compose.material.icons.twotone.VolumeUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +42,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -238,6 +250,7 @@ fun HunterGamingHorizontalSlider(
                 end.linkTo(parent.end)
                 bottom.linkTo(sliderConstraint.top)
             },
+
             text = "${(sliderPosition.value * 100f).toInt()}%"
         )
 
@@ -246,6 +259,7 @@ fun HunterGamingHorizontalSlider(
                 .constrainAs(sliderConstraint) {
                     top.linkTo(textConstraint.bottom)
                 },
+
             value = sliderPosition.value,
             onValueChange = {
                 sliderPosition.value = it
@@ -258,8 +272,8 @@ fun HunterGamingHorizontalSlider(
 @ExperimentalPagerApi
 @Composable
 fun HunterGamingTabs(
-    tabIcons: List<Int>,
-    tabTitles: List<Int>,
+    tabIcons: List<ImageVector>,
+    contentDescriptions: List<Int>,
     pagerState: PagerState,
     vararg tabScreens: @Composable () -> Unit
 ) {
@@ -273,38 +287,21 @@ fun HunterGamingTabs(
         TabRow(
             selectedTabIndex = tabIndex
         ) {
+
             val coroutineScope = rememberCoroutineScope()
             tabIcons.forEachIndexed { index, icon ->
+
                 Tab(
                     selected = tabIndex == index,
+
                     onClick = {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    text = {
-                        HunterGamingBodyText(
-                            text = tabTitles[index]
-                        )
-                    },
+
                     icon = {
-                        Image(
-                            modifier = Modifier
-                                .requiredWidth(
-                                    width = dimensionResource(
-                                        id = R.dimen.tab_icon_width
-                                    )
-                                )
-                                .requiredHeight(
-                                    height = dimensionResource(
-                                        id = R.dimen.tab_icon_height
-                                    )
-                                ),
-                            painter = painterResource(
-                                id = icon
-                            ),
-                            contentDescription = ""
-                        )
+                        Icon(imageVector = icon, contentDescription = stringResource(id = contentDescriptions[index]))
                     }
                 )
             }
@@ -319,11 +316,65 @@ fun HunterGamingTabs(
     }
 }
 
+@Composable
+fun HunterGamingSettingsRow(
+    modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    settingName: Int,
+    onCheckChange: (Boolean) -> Unit,
+    onSliderChange: (Float) -> Unit
+) {
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement
+    ) {
+
+        HunterGamingTitleText(text = settingName)
+
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacer_size)))
+
+        val checked = remember { mutableStateOf(true) }
+        Checkbox(
+
+            checked = checked.value,
+
+            onCheckedChange = {
+                checked.value = !checked.value
+                onCheckChange(checked.value)
+            }
+        )
+
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacer_size)))
+
+        val slider = remember { mutableStateOf(.8f) }
+        HunterGamingHorizontalSlider(
+
+            modifier = Modifier
+                .requiredWidth(dimensionResource(R.dimen.width_300))
+                .padding(
+                    start = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium)
+                ),
+
+            initialValue = slider.value,
+
+            onValueChange = {
+                slider.value = it
+                onSliderChange(slider.value)
+            },
+        )
+    }
+}
+
 // PREVIEWS
 
 @Preview(showBackground = true)
 @Composable
 private fun HunterGamingFieldRowPreview() {
+
     val text = remember { mutableStateOf(TextFieldValue(text =  "test")) }
     HunterGamingFieldRow(
         fieldNameString = R.string.test,
@@ -337,6 +388,7 @@ private fun HunterGamingFieldRowPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun HunterGamingHorizontalRadioButtonPreview() {
+
     HunterGamingHorizontalRadioButton(
         texts = listOf("A", "B"),
         selectedIndex = 0,
@@ -347,6 +399,7 @@ private fun HunterGamingHorizontalRadioButtonPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun HunterGamingHorizontalSliderPreview() {
+
     HunterGamingHorizontalSlider(
         initialValue = .8f,
         onValueChange = {  },
@@ -356,6 +409,7 @@ private fun HunterGamingHorizontalSliderPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun HunterGamingHorizontalImageRadioButtonPreview() {
+
     HunterGamingHorizontalImageRadioButton(
         images = listOf(R.drawable.card_back_red),
         imageWidth = R.dimen.image_radio_width,
@@ -370,31 +424,37 @@ private fun HunterGamingHorizontalImageRadioButtonPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun HunterGamingTabsPreview() {
-    val tabIcons = remember {
-        mutableStateOf(
-            listOf(
-                R.drawable.card_back_red
-            )
-        )
-    }
-
-    val tabTitles = remember {
-        mutableStateOf(
-            listOf(
-                R.string.test
-            )
-        )
-    }
 
     HunterGamingTabs(
-        tabIcons = tabIcons.value,
-        tabTitles = tabTitles.value,
+        tabIcons = listOf(
+            if (isSystemInDarkTheme()) Icons.TwoTone.VolumeUp else Icons.Outlined.VolumeUp,
+            if (isSystemInDarkTheme()) Icons.TwoTone.SportsEsports else Icons.Outlined.SportsEsports,
+            if (isSystemInDarkTheme()) Icons.TwoTone.Security else Icons.Outlined.Security
+        ),
+
+        contentDescriptions = listOf(
+            R.string.test,
+            R.string.test,
+            R.string.test
+        ),
+
         pagerState = rememberPagerState(
-            pageCount = tabIcons.value.size,
+            pageCount = 3,
             initialOffscreenLimit = 2,
             infiniteLoop = true,
             initialPage = 0,
         ),
-        {}
+        {  },  {  }, {  }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SettingsRowPreview() {
+
+    HunterGamingSettingsRow(
+        settingName = R.string.test,
+        onSliderChange = {},
+        onCheckChange = {}
     )
 }
