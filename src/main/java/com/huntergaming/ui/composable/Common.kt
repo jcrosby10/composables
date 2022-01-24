@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
@@ -77,7 +76,6 @@ fun HunterGamingFieldRow(
 ) {
 
     Row(modifier = Modifier
-        .fillMaxWidth()
         .padding(dimensionResource(id = R.dimen.padding_small)),
         horizontalArrangement = horizontalArrangement
     ) {
@@ -140,7 +138,7 @@ fun HunterGamingHorizontalRadioButton(
     modifier: Modifier = Modifier,
     texts: List<String>,
     selectedIndex: Int,
-    onSelect: (() -> Unit)
+    onSelect: ((String) -> Unit)
 ) {
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(texts[selectedIndex] ) }
@@ -165,13 +163,11 @@ fun HunterGamingHorizontalRadioButton(
                     selected = (text == selectedOption),
                     onClick = {
                         onOptionSelected(text)
-                        onSelect()
+                        onSelect(selectedOption)
                     }
                 )
 
-                HunterGamingBodyText(
-                    text = text
-                )
+                HunterGamingBodyText(text = text)
             }
         }
     }
@@ -192,8 +188,10 @@ fun HunterGamingHorizontalImageRadioButton(
 
     Row(
         modifier = modifier
+//            .fillMaxWidth()
     ) {
         images.forEachIndexed { index, imageId ->
+
             Row(
                 modifier= Modifier
                     .padding(
@@ -205,8 +203,10 @@ fun HunterGamingHorizontalImageRadioButton(
                             onOptionSelected(imageId)
                         }
                     ),
+
                 verticalAlignment = Alignment.CenterVertically
             ) {
+
                 RadioButton(
                     selected = (imageId == selectedOption),
                     onClick = {
@@ -217,6 +217,7 @@ fun HunterGamingHorizontalImageRadioButton(
 
                 Image(
                     painter = painterResource(imageId),
+
                     modifier = Modifier
                         .requiredWidth(
                             width = dimensionResource(imageWidth)
@@ -224,6 +225,7 @@ fun HunterGamingHorizontalImageRadioButton(
                         .requiredHeight(
                             height = dimensionResource(imageHeight)
                         ),
+
                     contentDescription = contentDescriptions[index]
                 )
             }
@@ -369,7 +371,42 @@ fun HunterGamingSettingsRow(
     }
 }
 
+@Composable
+fun HunterGamingRadioButtonRow(
+    modifier: Modifier = Modifier,
+    rowText: Int,
+    radioButtonNames: List<String>,
+    onSelect: ((String) -> Unit)
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        HunterGamingTitleText(text = rowText)
+
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacer_size)))
+
+        HunterGamingHorizontalRadioButton(
+            texts = radioButtonNames,
+            onSelect = { onSelect(it) },
+            selectedIndex = 0
+        )
+    }
+}
+
 // PREVIEWS
+
+@Preview(showBackground = true)
+@Composable
+private fun RadioButtonRowPreview() {
+
+    HunterGamingRadioButtonRow(
+        rowText = R.string.test,
+        radioButtonNames = listOf(stringResource(id = R.string.test)),
+        onSelect = {}
+    )
+}
 
 @Preview(showBackground = true)
 @Composable

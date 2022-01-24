@@ -57,6 +57,24 @@ fun HunterGamingButton(
 }
 
 @Composable
+fun HunterGamingTextButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true,
+    text: Int
+) {
+
+    Button(
+        enabled = isEnabled,
+        onClick = onClick,
+        modifier = modifier
+    ) {
+
+        HunterGamingBodyText(text = text)
+    }
+}
+
+@Composable
 fun HunterGamingAlertDialog(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {  },
@@ -268,6 +286,18 @@ fun HunterGamingBackgroundImage(image: Int) {
 }
 
 // PREVIEWS
+
+@Preview(showBackground = true)
+@Composable
+private fun TextButtonPreview() {
+    HunterGamingTextButton(onClick = { /*TODO*/ }, text = R.string.test)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BackgroundImagePreview() {
+    HunterGamingBackgroundImage(image = R.drawable.ic_lock_open_24)
+}
 
 @Preview(showBackground = true)
 @Composable
