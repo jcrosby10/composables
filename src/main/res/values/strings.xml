@@ -4,6 +4,11 @@
     <string name="button_yes">OK</string>
     <string name="button_cancel" tools:ignore="ButtonCase">CANCEL</string>
 
+    <string name="dialog_change_password_title">Change Your Password</string>
+    <string name="dialog_change_password_current">Current Password</string>
+    <string name="dialog_change_password_new">New Password</string>
+    <string name="dialog_change_password_verify">Verify Password</string>
+
     <string name="content_description_not_needed">@null</string>
     <string name="content_description_accept">Accept</string>
     <string name="content_description_cancel">Cancel</string>

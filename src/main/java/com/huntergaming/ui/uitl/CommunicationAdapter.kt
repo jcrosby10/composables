@@ -8,4 +8,4 @@ class CommunicationAdapter @Inject constructor() {
     val message: MutableLiveData<Message> = MutableLiveData()
 }
 
-data class Message(val data: Any)
+data class Message(val data: List<String>)
