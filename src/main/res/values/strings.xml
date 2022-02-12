@@ -13,4 +13,18 @@
     <string name="content_description_accept">Accept</string>
     <string name="content_description_cancel">Cancel</string>
     <string name="content_description_show_hide_password">Press to show or hide the visibility of the password entered.</string>
+    <string name="content_description_create_account">Create Account</string>
+    <string name="content_description_login">Login</string>
+
+    <string name="name_input">Your Name:</string>
+    <string name="email_input">Email Address:</string>
+    <string name="password_input">Password:</string>
+
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_title_success">Success</string>
+
+    <string name="error_no_internet">Please verify that you have a connection to the internet and try again.</string>
+
+    <string name="create_account_password_rules">Passwords must be at least 10 characters, contain at least one lower case letter, at least one upper case letter and at least one number, and at least one special character.</string>
+    <string name="create_account_verification_sent">An email was sent. Check your email for verification to complete the create account process.</string>
 </resources>

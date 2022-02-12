@@ -42,6 +42,7 @@ android {
 }
 
 dependencies {
+
     implementation("com.google.dagger:hilt-android:2.40.5")
     kapt("com.google.dagger:hilt-compiler:2.40.5")
 
@@ -62,6 +63,11 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:1.0.5")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0")
     implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-compose:2.4.0")
 
     implementation("com.google.accompanist:accompanist-pager:0.12.0")
 

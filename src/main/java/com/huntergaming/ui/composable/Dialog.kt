@@ -1,10 +1,7 @@
 package com.huntergaming.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
@@ -18,9 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.DialogProperties
@@ -48,14 +42,7 @@ fun HunterGamingAlertDialog(
             contentAlignment = Alignment.Center
         ) {
 
-            Image(
-                painter = painterResource(id = backgroundImage),
-                contentDescription = stringResource(id = R.string.content_description_not_needed),
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .width(dimensionResource(id = R.dimen.dialog_image_width))
-                    .height(dimensionResource(id = R.dimen.dialog_image_height))
-            )
+            HunterGamingBackgroundImage(image = backgroundImage)
 
             AlertDialog(
                 modifier = modifier,
