@@ -89,7 +89,7 @@ class HunterGamingObserver(
 
 sealed class DataRequestState {
     object InProgress: DataRequestState()
-    data class Success<T>(val data: T): DataRequestState()
+    data class Success<T>(val data: T?): DataRequestState()
 }
 
 sealed class CreateAccountState {

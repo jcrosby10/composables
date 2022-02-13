@@ -167,7 +167,7 @@ fun HunterGamingHorizontalImageRadioButton(
     imageHeight: Int,
     contentDescriptions: List<String>,
     selectedIndex: Int,
-    onSelect: (() -> Unit)
+    onSelect: ((Int) -> Unit)
 ) {
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(images[selectedIndex] ) }
@@ -196,7 +196,7 @@ fun HunterGamingHorizontalImageRadioButton(
                     selected = (imageId == selectedOption),
                     onClick = {
                         onOptionSelected(imageId)
-                        onSelect()
+                        onSelect(selectedOption)
                     }
                 )
 
@@ -262,6 +262,8 @@ fun HunterGamingSettingsRow(
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
     settingName: Int,
+    slider: MutableState<Float>,
+    checkbox: MutableState<Boolean>,
     onCheckChange: (Boolean) -> Unit,
     onSliderChange: (Float) -> Unit
 ) {
@@ -276,20 +278,18 @@ fun HunterGamingSettingsRow(
 
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacer_size)))
 
-        val checked = remember { mutableStateOf(true) }
         Checkbox(
 
-            checked = checked.value,
+            checked = checkbox.value,
 
             onCheckedChange = {
-                checked.value = !checked.value
-                onCheckChange(checked.value)
+                checkbox.value = !checkbox.value
+                onCheckChange(checkbox.value)
             }
         )
 
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacer_size)))
 
-        val slider = remember { mutableStateOf(.8f) }
         HunterGamingHorizontalSlider(
 
             modifier = Modifier
@@ -355,7 +355,9 @@ private fun SettingsRowPreview() {
     HunterGamingSettingsRow(
         settingName = R.string.test,
         onSliderChange = {},
-        onCheckChange = {}
+        onCheckChange = {},
+        slider = remember { mutableStateOf(.8f) },
+        checkbox = remember { mutableStateOf(true) }
     )
 }
 
