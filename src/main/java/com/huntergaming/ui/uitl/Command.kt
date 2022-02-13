@@ -3,8 +3,8 @@ package com.huntergaming.ui.uitl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-private val pNavigationRoute = MutableStateFlow("")
-val navigationRoute: StateFlow<String> = pNavigationRoute
+private val _navigationRoute = MutableStateFlow("")
+val navigationRoute: StateFlow<String> = _navigationRoute
 
 sealed class AuthHandler {
     class CreateAccount(val name: String, val email: String, val password: String): AuthHandler()
@@ -13,7 +13,7 @@ sealed class AuthHandler {
     object SendVerificationEmail: AuthHandler()
 }
 
-sealed class AuthState: UseCase {
+internal sealed class AuthState: UseCase {
 
     class CreateAccountUseCase(val name: String, val email: String, val password: String): AuthState() {
         override fun execute() {
@@ -40,10 +40,10 @@ sealed class AuthState: UseCase {
     }
 }
 
-class NavigateUseCase(val route: String): UseCase {
-    override fun execute() { pNavigationRoute.value = route }
+internal class NavigateUseCase(val route: String): UseCase {
+    override fun execute() { _navigationRoute.value = route }
 }
 
-interface UseCase {
+internal interface UseCase {
     fun execute()
 }
